@@ -11,6 +11,10 @@ describe('Display Component', () => {
 		const tree = renderer.create(<Display />);
 		expect(tree.toJSON()).toMatchSnapshot();
 	});
+	test('component does not crash', () => {
+		render(<Display />);
+	});
+
 	test('should be locked and closed ', () => {
 		const { getByTestId } = render(<Display closed={false} locked={false} />);
 		const lock = getByTestId('lock');

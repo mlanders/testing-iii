@@ -12,6 +12,9 @@ describe('Controls Component', () => {
 		const tree = renderer.create(<Controls />);
 		expect(tree.toJSON()).toMatchSnapshot();
 	});
+	test('component does not crash', () => {
+		render(<Controls />);
+	});
 
 	test('"Close Gate" fires a function ', () => {
 		const { getByText } = render(
@@ -47,5 +50,19 @@ describe('Controls Component', () => {
 
 		fireEvent.click(button);
 		expect(mock).toHaveBeenCalled();
+	});
+	test('lock gate should be disabled if gate is open', () => {
+		const { getByText } = render(<Controls closed={false} locked={false} />);
+
+		const button = getByText(/lock gate/i);
+
+		expect(button).toBeDisabled();
+	});
+	test('open gate should be disabled if gate is locked', () => {
+		const { getByText } = render(<Controls closed={true} locked={true} />);
+
+		const button = getByText(/open gate/i);
+
+		expect(button).toBeDisabled();
 	});
 });
